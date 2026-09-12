@@ -107,22 +107,23 @@ export function ExerciseVisual({ exercise, override, width }: Props) {
           color={figColor}
           accent={accent}
           faint={colors.muted}
+          shade={colors.surface}
           size={H * 0.62}
         />
       );
     }
     if (key === "start") {
       if (override?.start) return <Image source={{ uri: override.start }} style={{ width, height: H }} contentFit="contain" />;
-      return renderFigureSvg(<Person pose={cfg.start} color={figColor} accent={accent} implement={exercise.implement} />);
+      return renderFigureSvg(<Person pose={cfg.start} color={figColor} accent={accent} shade={colors.surface} implement={exercise.implement} />);
     }
     if (key === "end") {
       if (override?.end) return <Image source={{ uri: override.end }} style={{ width, height: H }} contentFit="contain" />;
-      return renderFigureSvg(<Person pose={cfg.end} color={figColor} accent={accent} implement={exercise.implement} />);
+      return renderFigureSvg(<Person pose={cfg.end} color={figColor} accent={accent} shade={colors.surface} implement={exercise.implement} />);
     }
     return renderFigureSvg(
       <>
-        <Person pose={cfg.start} color={colors.muted} accent={colors.muted} implement={exercise.implement} opacity={0.35} />
-        <Person pose={cfg.end} color={figColor} accent={accent} implement={exercise.implement} />
+        <Person pose={cfg.start} color={colors.muted} accent={colors.muted} implement={exercise.implement} opacity={0.3} />
+        <Person pose={cfg.end} color={figColor} accent={accent} shade={colors.surface} implement={exercise.implement} />
         <ArrowMotif type={cfg.arrow} accent={accent} />
       </>,
     );

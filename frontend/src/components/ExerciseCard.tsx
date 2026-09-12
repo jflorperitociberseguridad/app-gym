@@ -31,6 +31,7 @@ export function ExerciseCard({
           color={colors.onSurfaceSecondary}
           accent={colors.brandPrimary}
           faint={colors.muted}
+          shade={colors.surface}
           size={40}
         />
       </View>
