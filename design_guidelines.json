@@ -1,0 +1,215 @@
+{
+  "app_name": "Personal Gym Tracker",
+  "personality": "1 iOS-Native Clean",
+  "personality_one_liner": "A stark, high-contrast, professional fitness tracker with large typography and athletic momentum.",
+  "color": {
+    "light": {
+      "surface": "#FFFFFF",
+      "onSurface": "#111111",
+      "surfaceSecondary": "#F7F7F7",
+      "onSurfaceSecondary": "#111111",
+      "surfaceTertiary": "#EBEBEB",
+      "onSurfaceTertiary": "#111111",
+      "surfaceInverse": "#111111",
+      "onSurfaceInverse": "#FFFFFF",
+      "brand": "#E63946",
+      "brandPrimary": "#E63946",
+      "onBrandPrimary": "#FFFFFF",
+      "brandSecondary": "#FF2A2A",
+      "onBrandSecondary": "#FFFFFF",
+      "brandTertiary": "#FFEDED",
+      "onBrandTertiary": "#E63946",
+      "success": "#198754",
+      "onSuccess": "#FFFFFF",
+      "warning": "#FFC107",
+      "onWarning": "#111111",
+      "error": "#DC3545",
+      "onError": "#FFFFFF",
+      "info": "#111111",
+      "onInfo": "#FFFFFF",
+      "border": "#E5E5E5",
+      "borderStrong": "#D4D4D4",
+      "divider": "#E5E5E5",
+      "muted": "#6B6B6B",
+      "onBrand": "#FFFFFF"
+    },
+    "dark": {
+      "surface": "#101114",
+      "onSurface": "#FFFFFF",
+      "surfaceSecondary": "#1C1D21",
+      "onSurfaceSecondary": "#FFFFFF",
+      "surfaceTertiary": "#28292E",
+      "onSurfaceTertiary": "#FFFFFF",
+      "surfaceInverse": "#FFFFFF",
+      "onSurfaceInverse": "#111111",
+      "brand": "#E63946",
+      "brandPrimary": "#E63946",
+      "onBrandPrimary": "#FFFFFF",
+      "brandSecondary": "#FF5757",
+      "onBrandSecondary": "#FFFFFF",
+      "brandTertiary": "#3B0E12",
+      "onBrandTertiary": "#FFD6D6",
+      "success": "#2A9D8F",
+      "onSuccess": "#FFFFFF",
+      "warning": "#E9C46A",
+      "onWarning": "#111111",
+      "error": "#D62828",
+      "onError": "#FFFFFF",
+      "info": "#FFFFFF",
+      "onInfo": "#111111",
+      "border": "#2C2E33",
+      "borderStrong": "#41434A",
+      "divider": "#2C2E33",
+      "muted": "#9BA1A6",
+      "onBrand": "#FFFFFF"
+    }
+  },
+  "typography": {
+    "displayFontFamily": "Plus Jakarta Sans",
+    "textFontFamily": "Geist",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24
+    }
+  },
+  "spacing": {
+    "rule": "Generous vertical breathing room. Cards and actionable rows should feel expansive, with large hit targets to accommodate mid-workout tapping. Empty halves of the screen are bugs.",
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 6,
+    "md": 12,
+    "lg": 20,
+    "pill": 999
+  },
+  "shadow_tier": 1,
+  "navigation": "bottom_tabs",
+  "icon_set": "Ionicons",
+  "glassmorphism": {
+    "enabled": true,
+    "do's": [
+      "Bottom tab bar background",
+      "Sticky headers scrolling over exercise library or history feeds",
+      "Rest timer floating action panel",
+      "Featured card scrims over photo backgrounds"
+    ],
+    "dont's": [
+      "Form fields",
+      "Data-heavy workout tracking grids",
+      "Body text regions",
+      "Every generic card"
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-glass-effect",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Dashboard",
+      "purpose": "Glanceable overview of weekly streak, activity rings, and immediate entry into today's planned routine.",
+      "states": {
+        "loading": "Skeleton grids for stats.",
+        "empty": "Illustration + 'Empieza tu primera rutina hoy' + CTA.",
+        "error": "Error al cargar datos locales + Reintentar."
+      },
+      "layout": "Bento-grid approach. A large featured top card showing current progress using the abstract dark gym photo with a vertical gradient scrim (transparent to 80% surfaceInverse). Underneath, a 2-column grid of metrics (Volume, Workouts). Primary CTA 'Comenzar Entrenamiento' sticky at the bottom."
+    },
+    {
+      "name": "Biblioteca",
+      "purpose": "Filterable visual library of 80+ exercises with vectors.",
+      "states": {
+        "loading": "Pulsing grey rectangles in grid layout.",
+        "empty": "No exercises match the selected filters.",
+        "error": "Data parsing error + Retry button."
+      },
+      "layout": "Sticky horizontal scroll view at the top for muscle-group filter chips (pill shape). Below, a 1-column list of large exercise cards. Cards have photo/vector thumbnail on left, Title + Muscle + 'Rodilla protegida' badge on right. Safe area respected."
+    },
+    {
+      "name": "Detalle de Ejercicio",
+      "purpose": "Deep dive into exercise mechanics: images, steps, instructions, and settings.",
+      "states": {
+        "loading": "Spinner centered.",
+        "empty": "N/A",
+        "error": "Exercise not found."
+      },
+      "layout": "Top half is a paginated swipe view of Vector Diagrams (Initial, End, Movement). Below, crisp structured text for Instructions, Common Mistakes. Use tinted icon containers for tags like Equipment and Level. Include explicit 'Alternativa fácil' sections."
+    },
+    {
+      "name": "Rutinas",
+      "purpose": "Routine management (Create, Edit, Duplicate) and launching active workouts.",
+      "states": {
+        "loading": "Centered spinner.",
+        "empty": "'No tienes rutinas creadas' with sketch image + 'Crear Rutina' CTA.",
+        "error": "Failed to load routines."
+      },
+      "layout": "List view of Routine cards (showing summary of exercises inside). Floating Action Button to Add Routine using glassmorphism. Inside a routine, sticky CTA at bottom 'Iniciar Entrenamiento'."
+    },
+    {
+      "name": "Entrenamiento Activo",
+      "purpose": "The core tracking screen during a workout. Requires one-handed, thumb-friendly usage.",
+      "states": {
+        "loading": "Preparing session...",
+        "empty": "N/A",
+        "error": "Session save error."
+      },
+      "layout": "Highly optimized list of sets. Use large monospaced font sizes for Reps/Weight inputs. Pre-fill from previous session. One-tap '✓' button to log a set. A persistent, highly visible sticky bar at the bottom containing the Rest Timer (auto-starts on set completion) and 'Finalizar' button."
+    },
+    {
+      "name": "Progreso y Ajustes",
+      "purpose": "Review history charts, manage 'Rodilla Protegida' settings, and export/import data.",
+      "states": {
+        "loading": "Skeleton charts.",
+        "empty": "No history to chart yet.",
+        "error": "Error reading local db."
+      },
+      "layout": "Segmented control at the top to toggle between 'Progreso' and 'Ajustes'. Progreso uses horizontal bar charts for volume/reps. Ajustes is a clean list of rows with tinted icon containers for 'Rodilla Protegida' settings and JSON Export buttons."
+    }
+  ],
+  "images": {
+    "dashboard_hero": {
+      "url": "https://images.unsplash.com/photo-1550345332-09e3ac987658?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxneW0lMjB3b3Jrb3V0JTIwYWJzdHJhY3QlMjB0ZXh0dXJlfGVufDB8fHx8MTc4OTI0NzgyM3ww&ixlib=rb-4.1.0&q=85",
+      "dark": "https://images.unsplash.com/photo-1722925541321-f52d45b29c17?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwyfHxneW0lMjB3b3Jrb3V0JTIwYWJzdHJhY3QlMjB0ZXh0dXJlfGVufDB8fHx8MTc4OTI0NzgyM3ww&ixlib=rb-4.1.0&q=85",
+      "alt": "Abstract atmospheric gym texture for the dashboard backdrop"
+    },
+    "empty_routines": {
+      "url": "https://images.unsplash.com/photo-1623697899811-f2403f50685e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwxfHxlbXB0eSUyMHN0YXRlJTIwbm90ZWJvb2slMjBza2V0Y2h8ZW58MHx8fHwxNzg5MjQ3ODMyfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "A minimal white notebook sketch for empty states"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the color palette. Blue and Indigo are entirely banned. Use the provided Signal Red (#E63946) as the sole accent color over a black/white baseline.",
+    "Implement the 'light' and 'dark' color objects properly to support system theme toggling. Ensure Dark mode uses slightly lifted surfaces instead of pure black for components.",
+    "Active Workout Screen is the most critical: Use monospaced numerals (JetBrains Mono or similar if available, otherwise apply tabularNums) for timers and inputs. Inputs should pre-fill from the previous session to reduce typing. Sets should be logged with a single large tap target.",
+    "MANDATORY SCRIM: Over the `dashboard_hero` image, you must place a top-to-bottom vertical gradient scrim (transparent to 80% surfaceInverse) so the text remains readable. Position the content in the bottom 30-40% of the image.",
+    "Bento grid for dashboard: Do not leave empty space. Use `flexDirection: 'row'`, `flexWrap: 'wrap'`, `justifyContent: 'space-between'`, `gap: md` and set card widths to `(screenWidth - 2*padding - gap) / 2`.",
+    "All data is 100% local. Do not mock API calls to the internet; mock local SQLite or AsyncStorage interfaces. Include the JSON Export/Import UI prominently in settings.",
+    "Include 'Rodilla Protegida' logic visually. Use a custom tinted chip (brandTertiary bg, brandPrimary text) to flag these exercises.",
+    "Avoid typical Material blue and rounded floating-input styles. Use Native iOS Clean aesthetics: large clean typography, subtle borders, high structural alignment."
+  ],
+  "haptics": {
+    "primary_button_press": "impactLight",
+    "tab_bar_change": "selection",
+    "log_set_completion": "impactMedium",
+    "rest_timer_end": "notificationSuccess",
+    "toggle_switch": "impactLight",
+    "start_workout": "impactHeavy"
+  }
+}
