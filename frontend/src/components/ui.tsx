@@ -100,14 +100,14 @@ export function KneeBadge({ safety }: { safety: KneeSafety }) {
   const styles = useStyles();
   const cfg =
     safety === "permitido"
-      ? { bg: colors.success, icon: "checkmark-circle", label: "Rodilla OK" }
+      ? { bg: colors.success, fg: colors.onSuccess, icon: "checkmark-circle", label: "Rodilla OK" }
       : safety === "precaucion"
-        ? { bg: colors.warning, icon: "alert-circle", label: "Precaución" }
-        : { bg: colors.error, icon: "close-circle", label: "Bloqueado" };
+        ? { bg: colors.warning, fg: colors.onWarning, icon: "alert-circle", label: "Precaución" }
+        : { bg: colors.error, fg: colors.onError, icon: "close-circle", label: "Bloqueado" };
   return (
     <View style={[styles.kneeBadge, { backgroundColor: cfg.bg }]} testID={`knee-badge-${safety}`}>
-      <Ionicons name={cfg.icon as any} size={12} color="#FFFFFF" />
-      <Text style={styles.kneeBadgeText}>{cfg.label}</Text>
+      <Ionicons name={cfg.icon as any} size={12} color={cfg.fg} />
+      <Text style={[styles.kneeBadgeText, { color: cfg.fg }]}>{cfg.label}</Text>
     </View>
   );
 }
@@ -308,7 +308,7 @@ const useStyles = makeStyles((colors) => ({
     paddingVertical: 4,
     borderRadius: 999,
   },
-  kneeBadgeText: { fontSize: 11, fontWeight: "800", color: "#FFFFFF" },
+  kneeBadgeText: { fontSize: 11, fontWeight: "800" },
   card: {
     backgroundColor: colors.surfaceSecondary,
     borderRadius: radius.lg,
