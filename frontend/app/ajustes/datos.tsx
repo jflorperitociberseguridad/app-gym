@@ -50,7 +50,145 @@ function parseCSV(text: string): Exercise[] {
     );
   }
   return out;
+
 }
+
+const MUSCLE_GROUPS = ["pecho", "espalda", "hombros", "biceps", "triceps", "core", "gluteos", "piernas", "movilidad", "cardio", "estiramientos"];
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+const isStringArray = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.every((item) => typeof item === "string");
+const isFiniteNumber = (value: unknown): value is number =>
+  typeof value === "number" && Number.isFinite(value);
+
+function isExercise(value: unknown): boolean {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.id === "string" &&
+    typeof value.name === "string" &&
+    MUSCLE_GROUPS.includes(value.group as string) &&
+    typeof value.equipment === "string" &&
+    ["principiante", "intermedio", "avanzado"].includes(value.level as string) &&
+    typeof value.pattern === "string" &&
+    ["front", "back"].includes(value.view as string) &&
+    isStringArray(value.muscles) &&
+    isStringArray(value.instructions) &&
+    isStringArray(value.mistakes) &&
+    typeof value.easier === "string" &&
+    typeof value.noEquip === "string" &&
+    isFiniteNumber(value.sets) &&
+    typeof value.reps === "string" &&
+    isFiniteNumber(value.restSec) &&
+    ["permitido", "precaucion", "bloqueado"].includes(value.kneeSafety as string) &&
+    ["barra", "mancuerna", "none"].includes(value.implement as string) &&
+    typeof value.jumping === "boolean" &&
+    typeof value.highImpact === "boolean" &&
+    typeof value.deepKnee === "boolean" &&
+    (value.duration === undefined || typeof value.duration === "string")
+  );
+}
+
+function isRoutine(value: unknown): boolean {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.id === "string" &&
+    typeof value.name === "string" &&
+    typeof value.description === "string" &&
+    typeof value.icon === "string" &&
+    typeof value.isTemplate === "boolean" &&
+    typeof value.createdAt === "string" &&
+    Array.isArray(value.exercises) &&
+    value.exercises.every(
+      (exercise) =>
+        isRecord(exercise) &&
+        typeof exercise.exerciseId === "string" &&
+        isFiniteNumber(exercise.sets) &&
+        typeof exercise.reps === "string" &&
+        isFiniteNumber(exercise.restSec),
+    )
+  );
+}
+
+function isWorkoutSession(value: unknown): boolean {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.id === "string" &&
+    (value.routineId === undefined || typeof value.routineId === "string") &&
+    typeof value.routineName === "string" &&
+    typeof value.date === "string" &&
+    isFiniteNumber(value.durationSec) &&
+    isFiniteNumber(value.totalVolume) &&
+    isFiniteNumber(value.totalSets) &&
+    isFiniteNumber(value.avgEffort) &&
+    isFiniteNumber(value.maxPain) &&
+    Array.isArray(value.exercises) &&
+    value.exercises.every(
+      (exercise) =>
+        isRecord(exercise) &&
+        typeof exercise.exerciseId === "string" &&
+        typeof exercise.name === "string" &&
+        isFiniteNumber(exercise.effort) &&
+        isFiniteNumber(exercise.pain) &&
+        typeof exercise.notes === "string" &&
+        Array.isArray(exercise.sets) &&
+        exercise.sets.every(
+          (set) =>
+            isRecord(set) &&
+            isFiniteNumber(set.weight) &&
+            isFiniteNumber(set.reps) &&
+            typeof set.done === "boolean",
+        ),
+    )
+  );
+}
+
+function isBackupData(value: unknown): value is Record<string, unknown> {
+  if (!isRecord(value)) return false;
+  const settings = value.settings;
+  const knee = value.knee;
+  const images = value.images;
+  return (
+    value.version === 1 &&
+    typeof value.exportedAt === "string" &&
+    Array.isArray(value.routines) &&
+    value.routines.every(isRoutine) &&
+    Array.isArray(value.history) &&
+    value.history.every(isWorkoutSession) &&
+    isRecord(settings) &&
+    typeof settings.name === "string" &&
+    ["kg", "lb"].includes(settings.units as string) &&
+    isFiniteNumber(settings.weeklyGoal) &&
+    isRecord(knee) &&
+    typeof knee.enabled === "boolean" &&
+    ["izquierda", "derecha", "ambas"].includes(knee.side as string) &&
+    isFiniteNumber(knee.painThreshold) &&
+    knee.painThreshold >= 0 &&
+    knee.painThreshold <= 10 &&
+    isFiniteNumber(knee.maxIntensity) &&
+    knee.maxIntensity >= 0 &&
+    knee.maxIntensity <= 10 &&
+    isFiniteNumber(knee.maxWeightKg) &&
+    knee.maxWeightKg >= 0 &&
+    typeof knee.reducedRom === "boolean" &&
+    isRecord(images) &&
+    Object.values(images).every(
+      (image) =>
+        isRecord(image) &&
+        ["main", "start", "end"].every(
+          (key) => image[key] === undefined || typeof image[key] === "string",
+        ),
+    ) &&
+    Array.isArray(value.customExercises) &&
+    value.customExercises.every(isExercise)
+  );
+}
+
+type PendingBackup = {
+  data: Record<string, unknown>;
+  routineCount: number;
+  sessionCount: number;
+  customExerciseCount: number;
+};
 
 export default function Datos() {
   const styles = useStyles();
@@ -61,6 +199,7 @@ export default function Datos() {
   const { ready, exportData, importData, addCustomExercises, routines, history, exercises } = useGym();
 
   const [text, setText] = useState("");
+  const [pendingBackup, setPendingBackup] = useState<PendingBackup | null>(null);
 
   if (!ready) return <Loading />;
 
@@ -75,24 +214,36 @@ export default function Datos() {
     }
   };
 
-  const handleText = async (raw: string): Promise<boolean> => {
+  const handleText = async (raw: string): Promise<"imported" | "pending" | "invalid"> => {
     const t = raw.trim();
-    if (!t) return false;
+    if (!t) return "invalid";
     // Try JSON first
     if (t.startsWith("{") || t.startsWith("[")) {
       try {
-        const parsed = JSON.parse(t);
+        const parsed: unknown = JSON.parse(t);
         if (Array.isArray(parsed)) {
-          const n = await addCustomExercises(parsed as Exercise[]);
+          if (parsed.length === 0 || !parsed.every(isExercise)) {
+            toast.show("El JSON no contiene una lista válida de ejercicios.", "error");
+            return "invalid";
+          }
+          const n = await addCustomExercises(parsed);
           toast.show(`${n} ejercicios importados`, "success");
-          return true;
+          return "imported";
         }
-        await importData(parsed);
-        toast.show("Datos importados correctamente", "success");
-        return true;
+        if (!isBackupData(parsed)) {
+          toast.show("La copia no tiene un formato válido de Gym Personal.", "error");
+          return "invalid";
+        }
+        setPendingBackup({
+          data: parsed,
+          routineCount: parsed.routines.length,
+          sessionCount: parsed.history.length,
+          customExerciseCount: parsed.customExercises.length,
+        });
+        return "pending";
       } catch {
         toast.show("JSON no válido", "error");
-        return false;
+        return "invalid";
       }
     }
     // CSV
@@ -100,15 +251,27 @@ export default function Datos() {
     if (list.length > 0) {
       const n = await addCustomExercises(list);
       toast.show(`${n} ejercicios importados (CSV)`, "success");
-      return true;
+      return "imported";
     }
     toast.show("No se pudo interpretar el contenido", "error");
-    return false;
+    return "invalid";
   };
 
   const importPaste = async () => {
-    const ok = await handleText(text);
-    if (ok) setText("");
+    const result = await handleText(text);
+    if (result === "imported") setText("");
+  };
+
+  const confirmBackupImport = async () => {
+    if (!pendingBackup) return;
+    try {
+      await importData(pendingBackup.data);
+      setPendingBackup(null);
+      setText("");
+      toast.show("Copia importada correctamente", "success");
+    } catch {
+      toast.show("No se pudo importar la copia.", "error");
+    }
   };
 
   const importFile = async () => {
@@ -161,6 +324,18 @@ export default function Datos() {
           <Btn title="Importar desde texto" icon="download-outline" onPress={importPaste} style={{ marginTop: 10 }} testID="import-text-btn" />
           <Btn title="Importar desde archivo" variant="secondary" icon="folder-open-outline" onPress={importFile} style={{ marginTop: 10 }} testID="import-file-btn" />
         </Card>
+
+        {pendingBackup ? (
+          <Card>
+            <Text style={styles.cardTitle}>Confirmar importación</Text>
+            <Text style={styles.cardSub}>
+              La copia contiene {pendingBackup.routineCount} rutinas, {pendingBackup.sessionCount} sesiones y {pendingBackup.customExerciseCount} ejercicios personalizados.
+              Al continuar, reemplazará tus rutinas, historial y ajustes actuales.
+            </Text>
+            <Btn title="Confirmar y reemplazar" icon="checkmark" onPress={confirmBackupImport} style={{ marginTop: 12 }} testID="confirm-backup-import" />
+            <Btn title="Cancelar" variant="secondary" onPress={() => setPendingBackup(null)} style={{ marginTop: 8 }} testID="cancel-backup-import" />
+          </Card>
+        ) : null}
 
         <Card>
           <View style={styles.tmplHead}>
