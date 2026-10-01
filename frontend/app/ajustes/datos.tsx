@@ -9,7 +9,7 @@ import Ionicons from "@react-native-vector-icons/ionicons";
 
 import { useGym } from "@/src/store/GymStore";
 import { mk } from "@/src/data/_ex";
-import { Exercise, MuscleGroup } from "@/src/types";
+import { Exercise, ImageOverride, KneeSettings, MuscleGroup, Routine, UserSettings, WorkoutSession } from "@/src/types";
 import { makeStyles, radius, useTheme } from "@/src/theme";
 import { Btn, Card, Loading } from "@/src/components/ui";
 import { useToast } from "@/src/components/toast";
@@ -142,7 +142,7 @@ function isWorkoutSession(value: unknown): boolean {
   );
 }
 
-function isBackupData(value: unknown): value is Record<string, unknown> {
+function isBackupData(value: unknown): value is BackupData {
   if (!isRecord(value)) return false;
   const settings = value.settings;
   const knee = value.knee;
@@ -183,8 +183,19 @@ function isBackupData(value: unknown): value is Record<string, unknown> {
   );
 }
 
+type BackupData = {
+  version: 1;
+  exportedAt: string;
+  routines: Routine[];
+  history: WorkoutSession[];
+  settings: UserSettings;
+  knee: KneeSettings;
+  images: Record<string, ImageOverride>;
+  customExercises: Exercise[];
+};
+
 type PendingBackup = {
-  data: Record<string, unknown>;
+  data: BackupData;
   routineCount: number;
   sessionCount: number;
   customExerciseCount: number;
@@ -330,7 +341,7 @@ export default function Datos() {
             <Text style={styles.cardTitle}>Confirmar importación</Text>
             <Text style={styles.cardSub}>
               La copia contiene {pendingBackup.routineCount} rutinas, {pendingBackup.sessionCount} sesiones y {pendingBackup.customExerciseCount} ejercicios personalizados.
-              Al continuar, reemplazará tus rutinas, historial y ajustes actuales.
+              Al continuar, reemplazará tus rutinas, historial, ajustes, imágenes y ejercicios personalizados actuales.
             </Text>
             <Btn title="Confirmar y reemplazar" icon="checkmark" onPress={confirmBackupImport} style={{ marginTop: 12 }} testID="confirm-backup-import" />
             <Btn title="Cancelar" variant="secondary" onPress={() => setPendingBackup(null)} style={{ marginTop: 8 }} testID="cancel-backup-import" />
