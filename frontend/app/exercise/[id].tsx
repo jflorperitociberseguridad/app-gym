@@ -139,11 +139,11 @@ export default function ExerciseDetail() {
 
 const useStyles = makeStyles((colors) => ({
   screen: { flex: 1, backgroundColor: colors.surface },
-  content: { padding: 16, gap: 14 },
-  name: { fontSize: 26, fontWeight: "900", color: colors.onSurface },
+  content: { padding: 20, gap: 18 },
+  name: { fontSize: 30, fontWeight: "900", letterSpacing: -0.6, color: colors.onSurface },
   link: { color: colors.brandPrimary, fontWeight: "700", fontSize: 16 },
   badgeRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: -4 },
-  kneeNote: { flexDirection: "row", alignItems: "center", gap: 10, padding: 12, borderRadius: radius.md },
+  kneeNote: { flexDirection: "row", alignItems: "center", gap: 10, padding: 14, borderRadius: radius.lg },
   kneeNoteText: { flex: 1, color: "#FFFFFF", fontSize: 13, fontWeight: "600", lineHeight: 18 },
   okRow: { flexDirection: "row" },
   tags: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
@@ -170,11 +170,11 @@ const useStyles = makeStyles((colors) => ({
   infoValue: { fontSize: 15, color: colors.onSurface, fontWeight: "800" },
   block: { gap: 10 },
   blockHead: { flexDirection: "row", alignItems: "center", gap: 8 },
-  blockTitle: { fontSize: 18, fontWeight: "800", color: colors.onSurface },
+  blockTitle: { fontSize: 20, fontWeight: "800", color: colors.onSurface },
   bullet: { flexDirection: "row", gap: 12, alignItems: "flex-start" },
   bulletDot: { width: 22, height: 22, borderRadius: 999, alignItems: "center", justifyContent: "center", marginTop: 1 },
   bulletNum: { color: "#FFFFFF", fontSize: 12, fontWeight: "800" },
-  bulletText: { flex: 1, fontSize: 15, color: colors.onSurfaceSecondary, lineHeight: 21 },
+  bulletText: { flex: 1, fontSize: 15, color: colors.onSurfaceSecondary, lineHeight: 23 },
   altRow: { flexDirection: "row", gap: 12 },
   altCard: {
     backgroundColor: colors.surfaceSecondary,
