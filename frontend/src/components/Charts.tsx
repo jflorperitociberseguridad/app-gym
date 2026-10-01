@@ -66,11 +66,11 @@ export function LineChart({
   return (
     <View testID="line-chart">
       <Svg width={width} height={height}>
-        <Line x1={pad} y1={pad + h} x2={width - pad} y2={pad + h} stroke={colors.border} strokeWidth={1} />
+        <Line x1={pad} y1={pad + h} x2={width - pad} y2={pad + h} stroke={colors.divider} strokeWidth={1} />
         <Path d={area} fill={stroke} opacity={0.12} />
-        <Polyline points={poly} fill="none" stroke={stroke} strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" />
+        <Polyline points={poly} fill="none" stroke={stroke} strokeWidth={3.5} strokeLinejoin="round" strokeLinecap="round" />
         {pts.map((p, i) => (
-          <Circle key={i} cx={p.x} cy={p.y} r={4} fill={stroke} />
+          <Circle key={i} cx={p.x} cy={p.y} r={5} fill={stroke} stroke={colors.surfaceSecondary} strokeWidth={2} />
         ))}
       </Svg>
       <View style={[styles.lineLabels, { paddingHorizontal: pad }]}>
@@ -88,9 +88,9 @@ export function LineChart({
 const useStyles = makeStyles((colors) => ({
   barWrap: { flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", gap: 4 },
   barCol: { flex: 1, alignItems: "center" },
-  bar: { width: "72%", borderRadius: 6, minHeight: 3 },
-  barVal: { fontSize: 10, color: colors.muted, marginBottom: 4, fontWeight: "700" },
-  barLabel: { fontSize: 10, color: colors.muted, marginTop: 6, flex: 1, textAlign: "center" },
+  bar: { width: "76%", borderRadius: 9, minHeight: 4 },
+  barVal: { fontSize: 11, color: colors.onSurfaceSecondary, marginBottom: 6, fontWeight: "800" },
+  barLabel: { fontSize: 10, color: colors.muted, marginTop: 8, flex: 1, textAlign: "center", fontWeight: "600" },
   unit: { position: "absolute", top: -2, right: 0, fontSize: 10, color: colors.muted },
-  lineLabels: { flexDirection: "row", justifyContent: "space-between", marginTop: 2 },
+  lineLabels: { flexDirection: "row", justifyContent: "space-between", marginTop: 6 },
 }));
