@@ -1,11 +1,17 @@
 import { Tabs } from "expo-router";
-import { Platform } from "react-native";
+import { Platform, View } from "react-native";
 import Ionicons from "@react-native-vector-icons/ionicons";
 
-import { useTheme } from "@/src/theme";
+import { makeStyles, radius, useTheme } from "@/src/theme";
 
 export default function TabsLayout() {
   const { colors } = useTheme();
+  const styles = useStyles();
+  const icon = (name: string) => ({ color, size, focused }: { color: string; size: number; focused: boolean }) => (
+    <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
+      <Ionicons name={name as any} size={size} color={color} />
+    </View>
+  );
   return (
     <Tabs
       screenOptions={{
@@ -13,49 +19,35 @@ export default function TabsLayout() {
         tabBarActiveTintColor: colors.brandPrimary,
         tabBarInactiveTintColor: colors.muted,
         tabBarStyle: {
-          backgroundColor: colors.surface,
+          backgroundColor: colors.surfaceSecondary,
           borderTopColor: colors.border,
-          ...(Platform.OS === "web" ? { height: 64 } : {}),
+          borderTopWidth: 1,
+          height: Platform.OS === "web" ? 72 : 62,
+          paddingTop: 7,
+          paddingBottom: Platform.OS === "web" ? 8 : 4,
         },
-        tabBarItemStyle: { alignSelf: "center" },
-        tabBarLabelStyle: { fontSize: 11, fontWeight: "700" },
+        tabBarItemStyle: { alignSelf: "center", paddingTop: 2 },
+        tabBarLabelStyle: { fontSize: 10, fontWeight: "800", marginTop: 1 },
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Inicio",
-          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="biblioteca"
-        options={{
-          title: "Biblioteca",
-          tabBarIcon: ({ color, size }) => <Ionicons name="library" size={size} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="rutinas"
-        options={{
-          title: "Rutinas",
-          tabBarIcon: ({ color, size }) => <Ionicons name="list" size={size} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="progreso"
-        options={{
-          title: "Progreso",
-          tabBarIcon: ({ color, size }) => <Ionicons name="stats-chart" size={size} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="ajustes"
-        options={{
-          title: "Ajustes",
-          tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color} />,
-        }}
-      />
+      <Tabs.Screen name="index" options={{ title: "Inicio", tabBarIcon: icon("home") }} />
+      <Tabs.Screen name="biblioteca" options={{ title: "Biblioteca", tabBarIcon: icon("barbell") }} />
+      <Tabs.Screen name="rutinas" options={{ title: "Rutinas", tabBarIcon: icon("list") }} />
+      <Tabs.Screen name="progreso" options={{ title: "Progreso", tabBarIcon: icon("stats-chart") }} />
+      <Tabs.Screen name="ajustes" options={{ title: "Ajustes", tabBarIcon: icon("settings") }} />
     </Tabs>
   );
 }
+
+const useStyles = makeStyles((colors) => ({
+  iconWrap: {
+    width: 42,
+    height: 30,
+    borderRadius: radius.pill,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconWrapActive: {
+    backgroundColor: colors.brandTertiary,
+  },
+}));
