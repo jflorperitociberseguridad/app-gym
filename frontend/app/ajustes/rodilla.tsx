@@ -45,7 +45,7 @@ export default function RodillaConfig() {
       </View>
 
       <ScrollView
-        contentContainerStyle={{ padding: 16, paddingBottom: insets.bottom + 24, gap: 16 }}
+        contentContainerStyle={{ padding: 20, paddingBottom: insets.bottom + 28, gap: 18 }}
         showsVerticalScrollIndicator={false}
       >
         <Card>
@@ -162,14 +162,14 @@ const useStyles = makeStyles((colors) => ({
   screen: { flex: 1, backgroundColor: colors.surface },
   header: { flexDirection: "row", alignItems: "center", paddingHorizontal: 8, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: colors.border },
   iconBtn: { width: 42, height: 42, borderRadius: 999, alignItems: "center", justifyContent: "center" },
-  headerTitle: { flex: 1, fontSize: 20, fontWeight: "800", color: colors.onSurface, textAlign: "center" },
-  switchRow: { flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 6 },
+  headerTitle: { flex: 1, fontSize: 21, fontWeight: "800", color: colors.onSurface, textAlign: "center" },
+  switchRow: { flexDirection: "row", alignItems: "center", gap: 14, paddingVertical: 10 },
   switchTitle: { fontSize: 16, fontWeight: "800", color: colors.onSurface },
   switchSub: { fontSize: 13, color: colors.muted, marginTop: 2 },
   label: { fontSize: 15, fontWeight: "700", color: colors.onSurface, marginBottom: 8, marginTop: 12 },
   hint: { fontSize: 12, color: colors.muted, marginTop: -6, marginBottom: 4 },
   stepRow: { flexDirection: "row", alignItems: "center", gap: 12 },
-  cardTitle: { fontSize: 16, fontWeight: "800", color: colors.onSurface },
+  cardTitle: { fontSize: 18, fontWeight: "800", color: colors.onSurface },
   avoidRow: { flexDirection: "row", alignItems: "center", gap: 10, paddingVertical: 6 },
   avoidText: { fontSize: 14, color: colors.onSurfaceSecondary },
   listHead: { flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 6 },
