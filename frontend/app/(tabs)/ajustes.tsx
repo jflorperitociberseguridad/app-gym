@@ -56,7 +56,7 @@ export default function Ajustes() {
   return (
     <ScrollView
       style={styles.screen}
-      contentContainerStyle={{ padding: 16, paddingTop: insets.top + 12, paddingBottom: insets.bottom + 24, gap: 16 }}
+      contentContainerStyle={{ padding: 20, paddingTop: insets.top + 16, paddingBottom: insets.bottom + 28, gap: 18 }}
       showsVerticalScrollIndicator={false}
     >
       <Text style={styles.title}>Ajustes</Text>
@@ -145,9 +145,9 @@ export default function Ajustes() {
 
 const useStyles = makeStyles((colors) => ({
   screen: { flex: 1, backgroundColor: colors.surface },
-  title: { fontSize: 30, fontWeight: "900", color: colors.onSurface },
-  profile: { flexDirection: "row", alignItems: "center", gap: 14 },
-  avatar: { width: 54, height: 54, borderRadius: 999, backgroundColor: colors.brandPrimary, alignItems: "center", justifyContent: "center" },
+  title: { fontSize: 32, fontWeight: "900", letterSpacing: -0.8, color: colors.onSurface },
+  profile: { flexDirection: "row", alignItems: "center", gap: 14, backgroundColor: colors.surfaceSecondary, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, padding: 16 },
+  avatar: { width: 60, height: 60, borderRadius: 999, backgroundColor: colors.brandPrimary, alignItems: "center", justifyContent: "center" },
   profileName: { fontSize: 20, fontWeight: "900", color: colors.onSurface },
   profileSub: { fontSize: 13, color: colors.muted, marginTop: 2 },
   divider: { height: 1, backgroundColor: colors.border, marginVertical: 14 },
