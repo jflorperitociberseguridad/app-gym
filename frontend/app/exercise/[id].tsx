@@ -84,8 +84,8 @@ export default function ExerciseDetail() {
 
           {safety !== "permitido" ? (
             <View style={[styles.kneeNote, { backgroundColor: safety === "bloqueado" ? colors.error : colors.warning }]}>
-              <Ionicons name={safety === "bloqueado" ? "close-circle" : "alert-circle"} size={20} color="#FFFFFF" />
-              <Text style={styles.kneeNoteText}>
+              <Ionicons name={safety === "bloqueado" ? "close-circle" : "alert-circle"} size={20} color={safety === "bloqueado" ? colors.onError : colors.onWarning} />
+              <Text style={[styles.kneeNoteText, { color: safety === "bloqueado" ? colors.onError : colors.onWarning }]}>
                 {safety === "bloqueado"
                   ? "Bloqueado por tu modo Rodilla protegida. Considera una alternativa más segura."
                   : "Precaución con la rodilla: controla el rango y la carga."}
@@ -144,7 +144,7 @@ const useStyles = makeStyles((colors) => ({
   link: { color: colors.brandPrimary, fontWeight: "700", fontSize: 16 },
   badgeRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: -4 },
   kneeNote: { flexDirection: "row", alignItems: "center", gap: 10, padding: 14, borderRadius: radius.lg },
-  kneeNoteText: { flex: 1, color: "#FFFFFF", fontSize: 13, fontWeight: "600", lineHeight: 18 },
+  kneeNoteText: { flex: 1, fontSize: 13, fontWeight: "600", lineHeight: 18 },
   okRow: { flexDirection: "row" },
   tags: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
   infoTag: {
