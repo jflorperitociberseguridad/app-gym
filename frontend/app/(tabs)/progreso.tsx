@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Dimensions, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Ionicons from "@react-native-vector-icons/ionicons";
@@ -37,7 +37,12 @@ export default function Progreso() {
     history.forEach((s) => s.exercises.forEach((e) => set.set(e.exerciseId, e.name)));
     return Array.from(set.entries()).map(([key, name]) => ({ key, label: name }));
   }, [history]);
-  const [selectedEx, setSelectedEx] = useState(exOptions[0]?.key ?? "");
+  const [selectedEx, setSelectedEx] = useState("");
+  useEffect(() => {
+    if (!exOptions.some((option) => option.key === selectedEx)) {
+      setSelectedEx(exOptions[0]?.key ?? "");
+    }
+  }, [exOptions, selectedEx]);
   const exProg = useMemo(
     () => (selectedEx ? exerciseProgress(history, selectedEx) : []),
     [history, selectedEx],
