@@ -53,7 +53,7 @@ export default function Progreso() {
   return (
     <ScrollView
       style={styles.screen}
-      contentContainerStyle={{ padding: 16, paddingTop: insets.top + 12, paddingBottom: insets.bottom + 24, gap: 16 }}
+      contentContainerStyle={{ padding: 20, paddingTop: insets.top + 16, paddingBottom: insets.bottom + 28, gap: 18 }}
       showsVerticalScrollIndicator={false}
     >
       <Text style={styles.title}>Progreso</Text>
@@ -151,20 +151,20 @@ function ChartCard({ title, subtitle, children }: { title: string; subtitle: str
 
 const useStyles = makeStyles((colors) => ({
   screen: { flex: 1, backgroundColor: colors.surface },
-  title: { fontSize: 30, fontWeight: "900", color: colors.onSurface },
+  title: { fontSize: 32, fontWeight: "900", letterSpacing: -0.8, color: colors.onSurface },
   grid: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", gap: 12 },
   stat: {
-    width: (Dimensions.get("window").width - 32 - 36) / 4,
+    width: (Dimensions.get("window").width - 32 - 12) / 2,
     backgroundColor: colors.surfaceSecondary,
-    borderRadius: radius.md,
+    borderRadius: radius.lg,
     borderWidth: 1,
     borderColor: colors.border,
-    paddingVertical: 12,
+    paddingVertical: 16,
     alignItems: "center",
     gap: 4,
   },
-  statValue: { fontSize: 18, fontWeight: "900", color: colors.onSurface },
-  statLabel: { fontSize: 11, color: colors.muted, fontWeight: "600" },
+  statValue: { fontSize: 22, fontWeight: "900", color: colors.onSurface },
+  statLabel: { fontSize: 12, color: colors.muted, fontWeight: "700" },
   cardTitle: { fontSize: 17, fontWeight: "800", color: colors.onSurface },
   cardSub: { fontSize: 13, color: colors.muted, marginTop: 2 },
   noData: { fontSize: 13, color: colors.muted, textAlign: "center", paddingVertical: 20 },
