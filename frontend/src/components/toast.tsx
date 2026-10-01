@@ -42,11 +42,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     [opacity, translateY],
   );
 
-  const tone: Record<ToastType, { bg: string; icon: string }> = {
-    success: { bg: colors.success, icon: "checkmark-circle" },
-    error: { bg: colors.error, icon: "alert-circle" },
-    warning: { bg: colors.warning, icon: "warning" },
-    info: { bg: colors.surfaceInverse, icon: "information-circle" },
+  const tone: Record<ToastType, { bg: string; fg: string; icon: string }> = {
+    success: { bg: colors.successTertiary, fg: colors.success, icon: "checkmark-circle" },
+    error: { bg: colors.errorTertiary, fg: colors.error, icon: "alert-circle" },
+    warning: { bg: colors.warningTertiary, fg: colors.warning, icon: "warning" },
+    info: { bg: colors.infoTertiary, fg: colors.info, icon: "information-circle" },
   };
 
   return (
@@ -61,7 +61,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       >
         {msg ? (
           <View style={[styles.toast, { backgroundColor: tone[type].bg }]} testID="app-toast">
-            <Ionicons name={tone[type].icon as any} size={20} color={colors.onSurfaceInverse} />
+            <Ionicons name={tone[type].icon as any} size={20} color={tone[type].fg} />
             <Text style={styles.text}>{msg}</Text>
           </View>
         ) : null}
@@ -99,5 +99,5 @@ const useStyles = makeStyles((colors) => ({
     shadowOffset: { width: 0, height: 4 },
     elevation: 6,
   },
-  text: { color: colors.onSurfaceInverse, fontSize: 14, fontWeight: "700", flexShrink: 1 },
+  text: { color: colors.onSurface, fontSize: 14, fontWeight: "700", flexShrink: 1 },
 }));
