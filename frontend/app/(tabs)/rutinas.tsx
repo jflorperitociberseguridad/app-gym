@@ -111,7 +111,7 @@ export default function Rutinas() {
 
 const useStyles = makeStyles((colors) => ({
   screen: { flex: 1, backgroundColor: colors.surface },
-  title: { fontSize: 30, fontWeight: "900", color: colors.onSurface },
+  title: { fontSize: 32, fontWeight: "900", letterSpacing: -0.8, color: colors.onSurface },
   subtitle: { fontSize: 14, color: colors.muted, marginTop: -6, marginBottom: 4 },
   card: {
     flexDirection: "row",
@@ -124,15 +124,15 @@ const useStyles = makeStyles((colors) => ({
     padding: 16,
   },
   cardIcon: {
-    width: 50,
-    height: 50,
+    width: 56,
+    height: 56,
     borderRadius: radius.md,
     backgroundColor: colors.brandTertiary,
     alignItems: "center",
     justifyContent: "center",
   },
   cardTop: { flexDirection: "row", alignItems: "center", gap: 8 },
-  cardName: { fontSize: 17, fontWeight: "800", color: colors.onSurface, flexShrink: 1 },
+  cardName: { fontSize: 18, fontWeight: "800", color: colors.onSurface, flexShrink: 1 },
   tpl: { backgroundColor: colors.surfaceTertiary, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
   tplText: { fontSize: 10, fontWeight: "800", color: colors.muted },
   cardDesc: { fontSize: 13, color: colors.muted, marginTop: 2 },
@@ -140,8 +140,8 @@ const useStyles = makeStyles((colors) => ({
   fab: {
     position: "absolute",
     right: 20,
-    width: 60,
-    height: 60,
+    width: 62,
+    height: 62,
     borderRadius: 999,
     backgroundColor: colors.brandPrimary,
     alignItems: "center",
