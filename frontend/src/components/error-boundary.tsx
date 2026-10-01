@@ -49,8 +49,8 @@ function ErrorFallback({ error, resetError }: { error: Error; resetError: () => 
   return (
     <View style={styles.container} testID="error-fallback">
       <View style={styles.content}>
-        <Text style={styles.title}>Something went wrong</Text>
-        <Text style={styles.message}>Please reload the app to continue.</Text>
+        <Text style={styles.title}>Ha ocurrido un problema</Text>
+        <Text style={styles.message}>Reinicia la app para continuar.</Text>
         {__DEV__ ? <Text style={styles.devMessage}>{error.message}</Text> : null}
         <Pressable
           onPress={handleReload}
@@ -58,11 +58,11 @@ function ErrorFallback({ error, resetError }: { error: Error; resetError: () => 
           accessibilityRole="button"
           style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
         >
-          <Text style={styles.buttonText}>Reload app</Text>
+          <Text style={styles.buttonText}>Reiniciar app</Text>
         </Pressable>
         {__DEV__ ? (
           <Pressable onPress={() => setShowDetails((v) => !v)} accessibilityRole="button" hitSlop={8}>
-            <Text style={styles.detailsToggle}>{showDetails ? "Hide details" : "Show details"}</Text>
+            <Text style={styles.detailsToggle}>{showDetails ? "Ocultar detalles" : "Ver detalles"}</Text>
           </Pressable>
         ) : null}
       </View>
@@ -90,8 +90,8 @@ const useStyles = makeStyles((colors) => ({
   },
   title: {
     color: colors.onSurface,
-    fontSize: 22,
-    fontWeight: "700",
+    fontSize: 24,
+    fontWeight: "800",
     textAlign: "center",
   },
   message: {
@@ -107,7 +107,7 @@ const useStyles = makeStyles((colors) => ({
   button: {
     marginTop: 8,
     backgroundColor: colors.brandPrimary,
-    borderRadius: 12,
+    borderRadius: 18,
     paddingHorizontal: 24,
     paddingVertical: 14,
     minWidth: 180,
