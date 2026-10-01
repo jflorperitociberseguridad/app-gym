@@ -178,7 +178,7 @@ const useStyles = makeStyles((colors) => ({
   today: { backgroundColor: colors.surfaceInverse, borderColor: colors.surfaceInverse },
   todayLabel: { color: colors.brandSecondary, fontSize: 12, fontWeight: "800", letterSpacing: 1 },
   todayName: { color: colors.onSurfaceInverse, fontSize: 27, fontWeight: "900", letterSpacing: -0.5, marginTop: 5 },
-  todayDesc: { color: "rgba(255,255,255,0.7)", fontSize: 13, marginTop: 4 },
+  todayDesc: { color: colors.onSurfaceInverse, opacity: 0.72, fontSize: 13, marginTop: 5 },
   grid: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", gap: 12 },
   statCard: {
     width: (Dimensions.get("window").width - 32 - 12) / 2,
