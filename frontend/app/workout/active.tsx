@@ -347,7 +347,7 @@ const useStyles = makeStyles((colors) => ({
     borderTopColor: colors.border,
   },
   restPanel: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.surfaceInverse, borderRadius: radius.lg, padding: 14 },
-  restLabel: { color: "rgba(255,255,255,0.7)", fontSize: 12, fontWeight: "700" },
+  restLabel: { color: colors.onSurfaceInverse, opacity: 0.72, fontSize: 12, fontWeight: "700" },
   restTime: { color: colors.onSurfaceInverse, fontSize: 30, fontWeight: "900", fontVariant: ["tabular-nums"] },
   restBtn: { paddingHorizontal: 14, paddingVertical: 10, borderRadius: radius.sm, backgroundColor: colors.surfaceTertiary },
   restSkip: { backgroundColor: colors.brandPrimary },
