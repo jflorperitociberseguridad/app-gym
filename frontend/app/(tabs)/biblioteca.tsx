@@ -84,7 +84,7 @@ export default function Biblioteca() {
       <FlatList
         data={data}
         keyExtractor={(e) => e.id}
-        contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: insets.bottom + 24 }}
+        contentContainerStyle={{ padding: 20, gap: 14, paddingBottom: insets.bottom + 24 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <ExerciseCard
@@ -104,23 +104,25 @@ export default function Biblioteca() {
 const useStyles = makeStyles((colors) => ({
   screen: { flex: 1, backgroundColor: colors.surface },
   header: {
-    paddingHorizontal: 16,
-    paddingBottom: 8,
+    paddingHorizontal: 20,
+    paddingBottom: 12,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
     gap: 10,
   },
-  title: { fontSize: 30, fontWeight: "900", color: colors.onSurface },
+  title: { fontSize: 32, fontWeight: "900", letterSpacing: -0.8, color: colors.onSurface },
   subtitle: { fontSize: 14, color: colors.muted, marginTop: -4 },
   searchBox: {
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: colors.surfaceTertiary,
+    backgroundColor: colors.surfaceSecondary,
+    borderWidth: 1,
+    borderColor: colors.border,
     borderRadius: radius.md,
-    paddingHorizontal: 12,
-    height: 46,
+    paddingHorizontal: 14,
+    height: 50,
     marginHorizontal: 0,
   },
   searchInput: { flex: 1, fontSize: 16, color: colors.onSurface },
